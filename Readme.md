@@ -10,6 +10,7 @@ shown that companies can improve savings by implementing auto-shutdown with manu
 Ideally of course these scripts would not be required - Engineers could simply spin up and destroy environments as required but they are practical as well as
 human reality barriers to getting there quickly for most organisations.
 ## Usage
+
 ### Tags
 Tag Azure VMs with the following Tag:
 
@@ -32,6 +33,11 @@ This will stop all the VMs tagged `Project:tiger`
 
 ## Security
 This tool acts in the context of the user who runs it, if they have - VM Operator rights or above on the machines with the correct tags the tool will start / stop them.  If not it will fail.  
+
+## Set up
+
+1. You will need to create an application and grant the application *Delegated user_impersonation* against *Azure Service management*
+2. Complete the entries in the appsettings.json file (note ClientId = the Id of the application you created in 1 and Tenant is sometimes refered to as directory)
 
 ## Ideas for the future
 - Support Startup Order

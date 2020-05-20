@@ -8,7 +8,7 @@ namespace cumulus {
     public class authenticationHelper {
 
         public static async Task<string> GetAzureToken(string tenantId, string clientId) {
-                //To Do: pull clientid and tenant from config file
+
             string[] scopes = new string[] {"https://management.azure.com/.default"};
 
             var _clientApp = PublicClientApplicationBuilder.Create(clientId)

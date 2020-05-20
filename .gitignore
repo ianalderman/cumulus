@@ -1,2 +1,4 @@
 bin/
+obj/
 .vscode/
+appsettings.dev.json

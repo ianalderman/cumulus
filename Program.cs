@@ -1,14 +1,21 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.FileExtensions;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.DependencyInjection;
+using System.IO;
+using System;
 
 namespace cumulus
 {
     class Program
     {
-        static private string _accessToken;
-        static private string _subscriptionId;
+        private static IConfigurationRoot _configuration;
+        private static string _accessToken;
+        private static string _subscriptionId;
 
-        static private string _tenantId;
-        static private string _clientId;
+        private static string _tenantId;
+        private static string _clientId;
 
         static async Task<int> Main(string[] args)
         {
@@ -17,12 +24,27 @@ namespace cumulus
                 return 1;
             }
 
-            string subscriptionId = "";
-
+            if (File.Exists("appsettings.dev.json")) {
+                _configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                    .AddJsonFile("appsettings.dev.json", false)
+                    .Build();
+            } else {
+                _configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                    .AddJsonFile("appsettings.json", false)
+                    .Build();
+            }
             
-            _subscriptionId = subscriptionId;
-            _tenantId = "";
-            _clientId = "";
+            try {
+                _subscriptionId = _configuration.GetValue<string>("AzureConfiguration:SubscriptionId");
+                _tenantId =_configuration.GetValue<string>("AzureConfiguration:TenantId");
+                _clientId = _configuration.GetValue<string>("AzureConfiguration:ClientId");
+            } catch (Exception e) {
+                throw new InvalidDataException("Error loading configuration: {0}", e);
+            }
+
+
 
             string accessToken = await authenticationHelper.GetAzureToken(_tenantId, _clientId);
             _accessToken = accessToken;
