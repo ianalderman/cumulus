@@ -7,7 +7,7 @@ shown that companies can improve savings by implementing auto-shutdown with manu
 - Engineers may have mulitple environments that they are assigned - they can only work on one
 - Not starting resources for Engineers who have left or been reassigned (these should still be captured and tidied by Starters / Leavers / Movers process)
 
-Ideally of course these scripts would not be required - Engineers could simply spin up and destroy environments as required but they are practical as well as
+Ideally of course these scripts would not be required - Engineers could simply spin up and destroy environments as required but there are practical as well as
 human reality barriers to getting there quickly for most organisations.
 ## Usage
 
